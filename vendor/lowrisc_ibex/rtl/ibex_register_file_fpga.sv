@@ -51,7 +51,9 @@ module ibex_register_file_fpga #(
   logic [DataWidth-1:0] mem_o_a, mem_o_b;
 
   // WE strobe and one-hot encoded raddr alert.
+  /* verilator lint_off UNDRIVEN */
   logic oh_raddr_a_err, oh_raddr_b_err, oh_we_err;
+  /* verilator lint_on UNDRIVEN */
   assign err_o = oh_raddr_a_err || oh_raddr_b_err || oh_we_err;
 
   if (RdataMuxCheck) begin : gen_rdata_mux_check
