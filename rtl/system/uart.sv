@@ -229,6 +229,12 @@ module uart #(
   assign tx_fifo_wvalid = (reg_addr == UartTxReg) & write_req;
   assign tx_fifo_rready = tx_baud_tick & tx_next_byte;
 
+  always_ff @(posedge clk_i) begin
+    if (tx_fifo_rvalid & tx_fifo_rready) begin
+      $write("%c", tx_fifo_rdata);
+    end
+  end
+
   assign tx_baud_counter_d = tx_baud_tick ? '0 : tx_baud_counter_q + 1'b1;
   assign tx_baud_tick      = tx_baud_counter_q == $bits(tx_baud_counter_q)'(ClocksPerBaud - 1);
 
